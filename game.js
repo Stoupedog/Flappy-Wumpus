@@ -14,6 +14,7 @@ game.scale = 1;
 game.fps = 60;
 game.started = false;
 game.distance = 0; // initial value, don't change
+offset = {top: 0, left: 0};
 
 // settings
 game.gravity = 0.5;
@@ -68,6 +69,10 @@ function gameinit() {
 	game.rootScene.clearEventListener(enchant.Event.UP_BUTTON_DOWN);
 	// add the background
 
+	// adds background back
+	game.rootScene.removeChild(game.bg);
+	game.rootScene.addChild(game.bg);
+	
   // add obstacles to rootScene
 	game.rootScene.addChild(obstacles);
 
@@ -87,6 +92,7 @@ function gameinit() {
   game.getready.image = game.assets['assets/halloween/getready.png'];
   game.getready.x = (game.width / 2) - (game.getready.width / 2);
   game.getready.y = (game.height / 2) - (game.getready.height / 2);
+	game.getready.buttonMode = "up"
 
   // add game.getready to rootScene
 
@@ -139,6 +145,9 @@ function gameinit() {
   game.instructions.image = game.assets['assets/instructions.png'];
   game.instructions.x = (game.width/2) - (game.instructions.width/2);
   game.instructions.y = 460;
+	game.instructions.buttonMode = "up";
+	
+	game.bg.buttonMode = "up";
 
   // add game.instructions to rootScene
 	game.rootScene.addChild(game.instructions);
@@ -165,6 +174,10 @@ function flapAnimation() {
 }
 
 function gamerestart() {
+	
+	// clearing sprites up
+	
+	game.rootScene.removeChild(game.bg);
 	game.rootScene.removeChild(game.playbutton);
 	game.rootScene.removeChild(game.flappylogo);
 	game.rootScene.removeChild(game.ground);
@@ -172,6 +185,8 @@ function gamerestart() {
 	game.rootScene.removeChild(game.menubutton);
 	game.rootScene.clearEventListener(enchant.Event.DOWN_BUTTON_DOWN);
 	game.rootScene.clearEventListener(enchant.Event.RIGHT_BUTTON_DOWN);
+	
+	
 	game.gravity = 0.5;
 	game.flap_strength = 9;
 	game.fly_speed = 3.5;
@@ -184,6 +199,11 @@ function gamerestart() {
 	scoreBoard.text = "0";
 	game.rootScene.removeChild(obstacles);
 	game.rootScene.clearEventListener(enchant.Event.UP_BUTTON_DOWN);
+	
+	// does stuff with the background
+	
+	game.bg.buttonMode = "up";
+	game.rootScene.addChild(game.bg)
 	
 	game.rootScene.addChild(obstacles);
 	game.ground = new Sprite(1280,86);
@@ -198,6 +218,7 @@ function gamerestart() {
   game.getready.image = game.assets['assets/halloween/getready.png'];
   game.getready.x = (game.width / 2) - (game.getready.width / 2);
   game.getready.y = (game.height / 2) - (game.getready.height / 2);
+	game.getready.buttonMode = "up"
 
   // add game.getready to rootScene
 
@@ -246,6 +267,7 @@ function gamerestart() {
   game.instructions.image = game.assets['assets/instructions.png'];
   game.instructions.x = (game.width/2) - (game.instructions.width/2);
   game.instructions.y = 460;
+	game.instructions.buttonMode = "up"
 	game.rootScene.removeChild(scoreBoard)
 	game.rootScene.addChild(scoreBoard)
 	
@@ -368,12 +390,13 @@ function game_touched() {
     game.started = true;
   
     // remove getready and instructions
-    game.rootScene.removeChild(game.getready);
-    game.rootScene.removeChild(game.instructions);
 	
 }
 		
-      game.avatar.ySpeed = -game.flap_strength;
+      game.rootScene.removeChild(game.getready);
+    game.rootScene.removeChild(game.instructions);
+	
+	game.avatar.ySpeed = -game.flap_strength;
 	flapAnimation()
       if(gameEnded == false) {
 
@@ -458,7 +481,7 @@ function spawnObstacle(){
   top.image = game.assets['assets/obstacle_top.png'];
   top.x = -obstacles.x + game.width;
   top.y = -550 + pos - gap;
-
+	top.buttonMode = "up"
   // add top obstacle to obstacles group
   obstacles.addChild(top);
 
@@ -466,14 +489,17 @@ function spawnObstacle(){
   bottom.image = game.assets['assets/obstacle_bottom.png'];
   bottom.x = -obstacles.x + game.width;
   bottom.y = pos;
+	bottom.buttonMode = "up";
   
   // add bottom obstacle to obstacles group
   obstacles.addChild(bottom);
+	//game.rootScene.addEventListener(enchant.Event.UP_BUTTON_DOWN, game_touched);
   
 } // end spawnObstacle
 
 function gameover(){
   // add the instructions
+	game.bg.buttonMode = "";
   gameEnded = true;
 	game.started = false;
 	game.rootScene.removeChild(game.flapButton);
@@ -491,7 +517,7 @@ function gameover(){
 	
 	game.rootScene.addChild(game.retrybutton);
 	
-	// adding a back2menu button
+	// adding a back2menu button	
 	game.menubutton = new Sprite(300,100);
 	game.menubutton.image = game.assets['assets/back2menu.png'];
 	game.menubutton.y = game.height/2 - 50;
