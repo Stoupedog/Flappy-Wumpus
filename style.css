@@ -1,15 +1,15 @@
 /*
 COLORS:
 Blurple
-    Hex: #7289DA, RGB: 114, 137, 218
+    Hex: #7289DA - RGB: 114, 137, 218 - CMYK 56, 43, 0, 0
 Full white
-    Hex: #FFFFFF, RGB: 255,255,255
+    Hex: #FFFFFF - RGB: 255,255,255 - CMYK 0, 0, 0, 0
 Greyple
-    Hex: #99AAB5, RGB: 153, 170, 181
+    Hex: #99AAB5 - RGB: 153, 170, 181 - CMYK 42, 26, 23, 0
 Dark, but not black
-    Hex: #2C2F33, RGB: 44, 47, 51
+    Hex: #2C2F33 - RGB: 44, 47, 51 - CMYK 74, 65, 59, 60
 Not quite black
-    Hex: #23272A, RGB: 35, 39, 42
+    Hex: #23272A - RGB: 35, 39, 42 - CMYK 75, 66, 61, 67
 */
 
 * {
@@ -54,15 +54,9 @@ div {
     transform: scale(1) !important; /*fixes large loading screen*/
 }
 
-scoreBoard {
-    font: 'Comic Sans MS';
-    font-family: 'Comic Sans MS';
-}
-
 #bottom-banner {
     margin: 20px 0;
     width: 100vw;
-    z-index: 100;
 }
 
 #bottom-banner__inner {
@@ -100,10 +94,6 @@ footer {
     line-height: 26px;
 }
 
-.footer__inner a img {
-    margin-top: 15px;
-}
-
 .footer__inner a {
     text-decoration: none;
     color: #eee;
@@ -112,4 +102,8 @@ footer {
 
 .footer__inner a:hover {
     color: #7289DA;
+}
+
+.footer__inner a img {
+    margin-top: 15px;
 }
